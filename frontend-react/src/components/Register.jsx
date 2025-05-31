@@ -15,13 +15,17 @@ const Register = () => {
     const [errors, setErrors] = useState({});
     // const [success, setSuccess] = useState(false);
 
+    // Loading state
+    const [loading,  setLoading] = useState(false);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
   e.preventDefault();
-  console.log(form); // log the data being submitted
+//   console.log(form); // log the data being submitted
+    setLoading(true);
 
   try {
     const response = await axios.post('http://localhost:8000/api/v1/register/', form);
@@ -44,6 +48,8 @@ const Register = () => {
     } else {
       console.error("Error:", error.message);
     }
+  } finally {
+    setLoading(false)
   }
 };
 
@@ -95,8 +101,8 @@ const Register = () => {
           <small>{errors.password && <div className='text-danger'>{errors.password}</div>}</small>
         </div>
         {/* {success && <div className='alert alert-success'>Registration Successful</div>} */}
-
-        <button type="submit" className="submit-btn">Register</button>
+        {loading ? 
+        (<button type="submit" className="submit-btn" disabled>Please wait...</button>) : (<button type="submit" className="submit-btn">Register</button>)}
       </form>
     </div>
   );
