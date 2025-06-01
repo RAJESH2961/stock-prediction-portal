@@ -7,10 +7,15 @@ import Footer from './components/Footer'
 import { BrowserRouter , Routes, Route} from 'react-router-dom'
 import Register from './components/Register'
 import Login from './components/Login'
+// Auth Provider to manage Login Status based on Token status in Local storage
+// Global logged in state is managed in AuthProvider context that data is enclosed in this app so that entire App can access to that data
+import AuthProvider from './AuthProvider'
 function App() {
 
   return (
     <>
+    {/* Now the logges in status is accessible all the components */}
+    <AuthProvider> 
     <BrowserRouter>
     <Header/>
     <Routes>
@@ -20,6 +25,7 @@ function App() {
     </Routes>
     <Footer/>
     </BrowserRouter>
+    </AuthProvider>
     </>
   )
 }

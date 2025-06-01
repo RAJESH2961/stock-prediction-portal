@@ -13,7 +13,7 @@ const containerStyle = {
 const Main = () => {
   return (
     <>
-      <Background />
+      {/* <Background /> */}
       <div className="container">
         <div className='p-5 text-center bg-light-dark rounded'  style={containerStyle}>
           <h1 className='text-light'>Stock Prediction Portal</h1>
