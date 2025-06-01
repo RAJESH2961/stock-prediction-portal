@@ -21,7 +21,7 @@ const Main = () => {
             📊 Welcome to the Stock Prediction Portal!<br />
             Stay ahead of the market with smart, data-driven insights. Our portal uses advanced machine learning to analyze historical trends and forecast future stock prices. Simply enter a stock symbol to view predictions, interactive charts, and key insights — all designed to help you make informed investment decisions with confidence.
           </p>
-          <Button text="Login" />
+          <Button text="Explore now" href="/dashboard"  />
         </div>
       </div>
     </>

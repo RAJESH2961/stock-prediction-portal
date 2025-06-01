@@ -16,7 +16,7 @@ const Login = () => {
   // Navigating
   const navigate = useNavigate();
 
-  // Logged in Status using use COntext
+  // Logged in Status using use COntext consuming API from use Context
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
   const handleChange = (e) => {

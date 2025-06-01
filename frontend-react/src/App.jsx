@@ -10,6 +10,7 @@ import Login from './components/Login'
 // Auth Provider to manage Login Status based on Token status in Local storage
 // Global logged in state is managed in AuthProvider context that data is enclosed in this app so that entire App can access to that data
 import AuthProvider from './AuthProvider'
+import Dashboard from './components/Dashboard/Dashboard'
 function App() {
 
   return (
@@ -22,6 +23,7 @@ function App() {
       <Route path="/" element={<Main />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
     <Footer/>
     </BrowserRouter>

@@ -1,12 +1,19 @@
-// import React from 'react';
-import styles from './Button.module.css'; // Import CSS Module properly
+import styles from './Button.module.css';
 import { Link } from 'react-router-dom';
-const Button = ({ text, href }) => {
+
+const Button = ({ text, href, onClick, type = 'button' }) => {
+  if (href) {
+    return (
+      <Link to={href} className={styles.fancyButton}>
+        <span className={styles.text}>{text}</span>
+      </Link>
+    );
+  }
+
   return (
-    <Link to={href} className={styles.fancyButton}>
+    <button className={styles.fancyButton} onClick={onClick} type={type}>
       <span className={styles.text}>{text}</span>
-      <span className={styles.sparkle} />
-    </Link>
+    </button>
   );
 };
 
