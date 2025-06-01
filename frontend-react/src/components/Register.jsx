@@ -4,6 +4,9 @@ import axios from 'axios'
 
 // confetti effet
 import confetti from 'canvas-confetti';
+// Font awesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 
 const Register = () => {
@@ -98,11 +101,12 @@ const Register = () => {
             onChange={handleChange}
             required
           />
+          {/* <FontAwesomeIcon icon={faSpinner} spin="2x"/> */}
           <small>{errors.password && <div className='text-danger'>{errors.password}</div>}</small>
         </div>
         {/* {success && <div className='alert alert-success'>Registration Successful</div>} */}
         {loading ? 
-        (<button type="submit" className="submit-btn" disabled>Please wait...</button>) : (<button type="submit" className="submit-btn">Register</button>)}
+        (<button type="submit" className="submit-btn" disabled><FontAwesomeIcon icon={faSpinner} spin="2x"/>Please wait...</button>) : (<button type="submit" className="submit-btn">Register</button>)}
       </form>
     </div>
   );
