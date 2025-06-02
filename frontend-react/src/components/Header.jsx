@@ -26,7 +26,7 @@ const Header = () => {
         <div>
           {isLoggedIn ? (<>
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <Button text="Profile" href="/profile" />
+          <Button text="Dashboard" href="/dashboard" />
           <Button text="Logout" onClick={handleLogout} />
         </div>
 
