@@ -38,7 +38,7 @@ const Login = () => {
     console.log('Login Successful');
     setIsLoggedIn(true);
     // Navigating to home page
-    navigate('/')
+    navigate('/dashboard')
     
 
     setErrors({});
