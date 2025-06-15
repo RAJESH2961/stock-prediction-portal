@@ -10,6 +10,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from datetime import datetime
+import os
+from django.conf import settings
 
 class StockPredictionAPIView(APIView):
     def post(self, request):
@@ -28,7 +30,29 @@ class StockPredictionAPIView(APIView):
                 if df.empty:
                     return Response({'error': 'No data found for the given ticker.', 'status':status.HTTP_404_NOT_FOUND})
 
-                # You can add your prediction logic here...
+                # prediction logic here...
+
+                # reset index
+                df = df.reset_index()
+                # print(df)
+                # Generating a Basic plot
+
+                # MAtplot lib have 2 types of background 1.Interactive, NON-interactive
+                plt.switch_backend('AGG') # Antigrane goementry to sve plots in image files
+                plt.figure(figsize=(12,5))
+                plt.plot(df.Close, label='Closing price')
+                plt.title(f'Closing price of {ticker}')
+                plt.xlabel('Days')
+                plt.ylabel('Close Price')
+                plt.legend()
+                # saving the plots to a file in media directory
+                plot_img_path = f'{ticker}_plot.png'
+                image_path = os.path.join(settings.MEDIA_ROOT, plot_img_path)
+                plt.savefig(image_path)
+                plt.close()
+                image_url = settings.MEDIA_URL + plot_img_path
+                print(image_url)
+
 
                 return Response({'status': 'success', 'ticker': ticker})
             except Exception as e:
