@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../axiosInstance';
 import Button from '../UI/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const Dashboard = () => {
   const [ticker, setTicker] = useState('');
   const [prediction, setPrediction] = useState(null);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchProtectedData = async () => {
       try {
-        const response = await axiosInstance.get('/protected-view/');
-        // console.log("Success", response.data);
+        await axiosInstance.get('/protected-view/');
       } catch (error) {
-        console.error('Error Fetching data');
+        console.error('Error fetching protected data');
       }
     };
     fetchProtectedData();
@@ -20,13 +23,27 @@ const Dashboard = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setPrediction(null);
+
+    if (!ticker.trim()) {
+      setError("Please enter a valid ticker.");
+      return;
+    }
+
+    setLoading(true);
     try {
       const response = await axiosInstance.post('/predict/', { ticker });
-      setPrediction(response.data);
-      console.log('Prediction response:', response.data);
-
-    } catch (error) {
-      console.error('Prediction error:', error);
+      if (response.data.error) {
+        setError(response.data.error);
+      } else {
+        setPrediction(response.data);
+      }
+    } catch (err) {
+      console.error('Prediction error:', err);
+      setError('Something went wrong while fetching prediction.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -43,16 +60,18 @@ const Dashboard = () => {
             onChange={(e) => setTicker(e.target.value)}
           />
         </div>
-        <Button text="See Prediction" type="submit" />
+        {error && <div className="text-danger mb-2">{error}</div>}
+        <Button text={loading ? (
+          <><FontAwesomeIcon icon={faSpinner} spin /> Predicting...</>
+        ) : "See Prediction"} type="submit" disabled={loading} />
       </form>
 
       {prediction && (
-  <div className="alert alert-success mt-4 w-50 text-center">
-    <div><strong>Status:</strong> {prediction.status}</div>
-    <div><strong>Ticker:</strong> {prediction.ticker}</div>
-  </div>
-)}
-
+        <div className="alert alert-success mt-4 w-50 text-center">
+          <div><strong>Status:</strong> {prediction.status}</div>
+          <div><strong>Ticker:</strong> {prediction.ticker}</div>
+        </div>
+      )}
     </div>
   );
 };
