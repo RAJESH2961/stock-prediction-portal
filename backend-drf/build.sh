@@ -1,7 +1,13 @@
+#!/bin/bash
+
+# Exit if any command fails
 set -o errexit
 
-pip install -r requirements.txt
+# Install dependencies using Poetry
+poetry install
 
-python manage.py collectstatic --no-input
+# Run Django database migrations
+poetry run python manage.py migrate
 
-python manage.py migrate
+# (Optional) collect static files
+poetry run python manage.py collectstatic --noinput
